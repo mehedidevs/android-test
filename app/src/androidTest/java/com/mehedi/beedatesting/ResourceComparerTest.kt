@@ -11,21 +11,22 @@ class ResourceComparerTest {
 
     private lateinit var resourceComparer: ResourceComparer
 
+    private lateinit var context: Context
+
     @Before
     fun setup() {
+        context = ApplicationProvider.getApplicationContext()
         resourceComparer = ResourceComparer()
     }
 
     @Test
     fun stringResourceSameAsGivenString_returnsTrue() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
         val result = resourceComparer.isEqual(context, R.string.app_name, "BeedaTesting")
         assertThat(result).isTrue()
     }
 
     @Test
     fun stringResourceDifferentAsGivenString_returnsFalse() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
         val result = resourceComparer.isEqual(context, R.string.app_name, "Hello")
         assertThat(result).isFalse()
     }
