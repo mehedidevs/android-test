@@ -3,6 +3,7 @@ package com.mehedi.beedatesting
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
+import org.junit.After
 
 import org.junit.Before
 import org.junit.Test
@@ -29,5 +30,11 @@ class ResourceComparerTest {
     fun stringResourceDifferentAsGivenString_returnsFalse() {
         val result = resourceComparer.isEqual(context, R.string.app_name, "Hello")
         assertThat(result).isFalse()
+    }
+
+    @After
+    fun tearDown() {
+
+
     }
 }
