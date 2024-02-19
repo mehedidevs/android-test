@@ -46,7 +46,7 @@ class ShoppingDaoTest {
     fun insertShoppingItemTest() {
 
         runTest {
-            val shoppingItem = ShopingItem("Camera", 110, 75.0f, "img.png")
+            val shoppingItem = ShopingItem("Camera", 110, 75.0f, "img.png",1)
             shoppingDao.insertShoppingItem(shoppingItem)
 
             val items = shoppingDao.observeShoppingItem().getOrAwaitValue()
