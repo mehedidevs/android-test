@@ -5,6 +5,8 @@ import androidx.room.Room
 import com.mehedi.beedatesting.data.local.ShoppingDao
 import com.mehedi.beedatesting.data.local.ShoppingItemDB
 import com.mehedi.beedatesting.data.remote.PixabayApi
+import com.mehedi.beedatesting.repositories.DefaultRepository
+import com.mehedi.beedatesting.repositories.ShoppingRepository
 import com.mehedi.beedatesting.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -37,6 +39,12 @@ object AppModule {
         return db.shoppingDao()
     }
 
+
+    @Provides
+    @Singleton
+    fun providesShoppingRepo(dao: ShoppingDao, api: PixabayApi): ShoppingRepository {
+        return DefaultRepository(dao, api)
+    }
 
     @Provides
     @Singleton
