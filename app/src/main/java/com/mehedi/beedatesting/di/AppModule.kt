@@ -27,7 +27,7 @@ object AppModule {
         return Room.databaseBuilder(
             context,
             ShoppingItemDB::class.java,
-            Constants.DATABSE_NAME
+            Constants.DATABASE_NAME
         ).build()
     }
 
