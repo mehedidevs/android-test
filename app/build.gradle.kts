@@ -139,6 +139,8 @@ android {
         // ...with Kotlin.
         kaptTest("com.google.dagger:hilt-android-compiler:2.48")
 
+        debugImplementation ("androidx.fragment:fragment-testing:1.6.2")
+
 
 //        // For instrumented tests.
 //        androidTestImplementation("com.google.dagger:hilt-android-testing:2.44")

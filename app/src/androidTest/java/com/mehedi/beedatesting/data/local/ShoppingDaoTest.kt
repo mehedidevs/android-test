@@ -9,6 +9,8 @@ import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
 import com.mehedi.beedatesting.getOrAwaitValue
+import com.mehedi.beedatesting.launchFragmentInHiltContainer
+import com.mehedi.beedatesting.ui.ShoppingFragment
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
@@ -31,17 +33,26 @@ class ShoppingDaoTest {
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
 
-    //  lateinit var database: ShoppingItemDB
+
     @Inject
     @Named("test_dao")
     lateinit var shoppingDao: ShoppingDao
-    lateinit var appContext: Context
 
     @Before
-    fun setUp() {
+    fun setup() {
+        hiltRule.inject()
+    }
 
-        appContext = InstrumentationRegistry.getInstrumentation().targetContext
 
+    @Test
+    fun testLaunchFragmentInHiltContainer() {
+
+
+        launchFragmentInHiltContainer<ShoppingFragment> {
+
+
+
+        }
     }
 
 
@@ -90,13 +101,6 @@ class ShoppingDaoTest {
             val itemPrice = shoppingDao.observeTotalPrice().getOrAwaitValue()
             assertThat(itemPrice).isEqualTo((3 * 75) + (9 * 85) + (8 * 95))
         }
-    }
-
-
-    @After
-    fun tearDown() {
-
-
     }
 
 
