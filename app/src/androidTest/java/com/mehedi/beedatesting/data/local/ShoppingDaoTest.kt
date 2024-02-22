@@ -9,21 +9,31 @@ import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
 import com.mehedi.beedatesting.getOrAwaitValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import javax.inject.Inject
+import javax.inject.Named
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
+@HiltAndroidTest
 class ShoppingDaoTest {
 
     @get:Rule
     val intstanceTaskExecutorRule = InstantTaskExecutorRule()
 
-    lateinit var database: ShoppingItemDB
+    @get:Rule
+    val hiltRule = HiltAndroidRule(this)
+
+    //  lateinit var database: ShoppingItemDB
+    @Inject
+    @Named("test_dao")
     lateinit var shoppingDao: ShoppingDao
     lateinit var appContext: Context
 
@@ -31,14 +41,7 @@ class ShoppingDaoTest {
     fun setUp() {
 
         appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        database =
-            Room.inMemoryDatabaseBuilder(
-                appContext,
-                ShoppingItemDB::class.java
-            ).allowMainThreadQueries()
-                .build()
 
-        shoppingDao = database.shoppingDao()
     }
 
 
@@ -46,7 +49,7 @@ class ShoppingDaoTest {
     fun insertShoppingItemTest() {
 
         runTest {
-            val shoppingItem = ShopingItem("Camera", 110, 75.0f, "img.png",1)
+            val shoppingItem = ShopingItem("Camera", 110, 75.0f, "img.png", 1)
             shoppingDao.insertShoppingItem(shoppingItem)
 
             val items = shoppingDao.observeShoppingItem().getOrAwaitValue()
@@ -92,7 +95,7 @@ class ShoppingDaoTest {
 
     @After
     fun tearDown() {
-        database.close()
+
 
     }
 

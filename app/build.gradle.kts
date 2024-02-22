@@ -23,13 +23,16 @@ android {
             properties.load(rootProject.file("apikey.properties").inputStream())
         }
         val apiKey = properties.getProperty("API_KEY")
-        defaultConfig {
-            buildConfigField("String",
-                "API_KEY",
-                "\"$apiKey\"")
 
-            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        }
+        buildConfigField(
+            "String",
+            "API_KEY",
+            "\"$apiKey\""
+        )
+
+
+        testInstrumentationRunner = "com.mehedi.beedatesting.di.HiltTestRunner"
+
 
         buildTypes {
             release {
@@ -127,12 +130,25 @@ android {
         androidTestImplementation("androidx.test.ext:junit:1.1.5")
         androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
         androidTestImplementation("org.mockito:mockito-core:2.25.0")
-        androidTestImplementation("com.google.dagger:hilt-android-testing:2.28-alpha")
+        androidTestImplementation("com.google.dagger:hilt-android-testing:2.44")
         kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.48")
+
+
+        // For Robolectric tests.
+        testImplementation("com.google.dagger:hilt-android-testing:2.44")
+        // ...with Kotlin.
+        kaptTest("com.google.dagger:hilt-android-compiler:2.48")
+
+
+//        // For instrumented tests.
+//        androidTestImplementation("com.google.dagger:hilt-android-testing:2.44")
+//        // ...with Kotlin.
+//        kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.48")
 
 
     }
 
     kapt {
         correctErrorTypes = true
-    }}
+    }
+}
